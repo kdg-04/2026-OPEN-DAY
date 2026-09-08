@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI DX센터 커너비 구출작전</title>
+<style>
+:root{
+  --bg:#0d0f14; --panel:#161a22; --panel2:#1b2029; --line:#242a35;
+  --tx:#e8eaed; --mu:#98a0ad; --dim:#6b7280;
+  --am:#FFB300; --am2:#FFC93C; --amdim:#C08A00;
+  --red:#ef6a6a; --grn:#4ade80;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#07080b;overflow:hidden}
+body{font-family:"Apple SD Gothic Neo","Pretendard","Noto Sans KR",system-ui,sans-serif;
+     color:var(--tx);-webkit-font-smoothing:antialiased}
+
+/* ── 뷰포트 스케일링 ── */
+#stage{position:fixed;inset:0;display:grid;place-items:center}
+#deck{width:1280px;height:720px;position:relative;transform-origin:center center}
+.sl{position:absolute;inset:0;background:var(--bg);padding:64px 76px;
+    display:none;flex-direction:column;overflow:hidden}
+.sl.on{display:flex}
+
+/* ── 공통 타이포 ── */
+.eye{font-size:12px;letter-spacing:.18em;color:var(--amdim);font-weight:800}
+h2{font-size:38px;font-weight:800;letter-spacing:-.025em;line-height:1.2;margin-top:14px}
+h2 em{font-style:normal;color:var(--am)}
+.sub{font-size:16px;color:var(--mu);margin-top:12px;line-height:1.6}
+.body{flex:1;min-height:0;display:flex;align-items:center;margin-top:30px}
+.pn{position:absolute;right:76px;bottom:40px;font-size:13px;color:#3a4150;letter-spacing:.05em}
+b{font-weight:700;color:#fff}
+.am{color:var(--am)}.rd{color:var(--red)}.gr{color:var(--grn)}
+
+/* ── 표지 ── */
+.cover{justify-content:center;padding:0 96px 170px}
+.cover .bee{width:150px;margin-bottom:26px;filter:drop-shadow(0 0 46px rgba(255,179,0,.28))}
+.cover .ceye{font-size:13px;letter-spacing:.22em;color:var(--am);font-weight:800}
+.cover h1{font-size:76px;font-weight:800;letter-spacing:-.035em;margin-top:16px;line-height:1}
+.cover h1 span{color:var(--am)}
+.cover .cs{font-size:19px;color:var(--mu);margin-top:20px;line-height:1.6}
+.cover .cq{font-size:25px;font-weight:700;color:var(--am2);margin-top:44px;letter-spacing:-.015em}
+.cover .cline{position:absolute;left:96px;right:96px;bottom:140px;height:1px;background:var(--line)}
+.cover .cmeta{position:absolute;left:96px;bottom:44px;font-size:14px;color:var(--dim);
+              letter-spacing:.03em;line-height:1.9}
+.cover .disc{position:absolute;left:96px;right:96px;bottom:104px;font-size:12.5px;
+             color:#4d5461;line-height:1.6;letter-spacing:.01em}
+.cover .award{position:absolute;right:96px;bottom:44px;text-align:right;
+              font-size:14px;color:var(--dim);line-height:1.9}
+.cover .award b{color:var(--am2);font-size:16px}
+
+/* ── 레이아웃 유틸 ── */
+.cols{display:flex;gap:30px;width:100%}
+.col{flex:1;min-width:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 28px}
+.card.hi{background:linear-gradient(160deg,#231c07,#181b22);border-color:#4a3a10}
+.card .k{font-size:12px;letter-spacing:.12em;color:var(--dim);font-weight:700}
+.card .v{font-size:17px;line-height:1.65;margin-top:12px;color:#c9cfd8}
+.big{font-size:60px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.big.sm{font-size:42px}
+.lbl{font-size:14px;color:var(--mu);margin-top:10px}
+
+/* ── 흐름 다이어그램 ── */
+.flow{display:flex;flex-direction:column;gap:9px;width:100%}
+.fr{display:flex;align-items:center;gap:14px}
+.fbox{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:11px;
+      padding:15px 20px;display:flex;align-items:baseline;gap:14px}
+.fbox .who{font-size:13px;font-weight:800;color:var(--am);min-width:52px;letter-spacing:.02em}
+.fbox .what{font-size:17px;color:#d3d9e2}
+.fbox.no{border-color:#4a2020;background:#1c1113}
+.fbox.no .who{color:var(--red)}
+.fbox.go{border-color:#4a3a10;background:linear-gradient(100deg,#241d08,#181b22)}
+.arrow{font-size:14px;color:#39414f;text-align:center;margin-left:26px}
+
+/* ── 역할 분리 표 ── */
+.role{display:flex;gap:22px;width:100%}
+.rc{flex:1;border-radius:14px;padding:28px;border:1px solid var(--line);background:var(--panel)}
+.rc .rt{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.rc.op .rt{color:var(--am)} .rc.di .rt{color:#7dd3fc}
+.rc .rrow{margin-top:20px;padding-top:16px;border-top:1px solid #262c37}
+.rc .rk{font-size:12px;letter-spacing:.1em;color:var(--dim);font-weight:700}
+.rc .rv{font-size:17px;margin-top:8px;line-height:1.55;color:#d3d9e2}
+.vs{align-self:center;font-size:15px;color:#3a4150;font-weight:800;letter-spacing:.1em}
+
+/* ── 이미지 슬라이드 ── */
+.shot{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+      margin-top:26px}
+.shot img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;
+          box-shadow:0 18px 54px rgba(0,0,0,.6);border:1px solid #1e242e}
+.notes{display:flex;gap:26px;border-top:1px solid var(--line);padding-top:18px;margin-top:22px}
+.nt{flex:1}
+.nt .nk{font-size:11px;letter-spacing:.12em;color:var(--dim);font-weight:800}
+.nt .nv{font-size:14.5px;line-height:1.6;margin-top:8px;color:#b9c0ca}
+
+/* ── 인원 도트 ── */
+.dots{display:flex;gap:9px;margin-top:16px}
+.dot{width:34px;height:34px;border-radius:50%;background:#232936;border:1px solid #2d3542}
+.dot.on{background:var(--am);border-color:var(--am);box-shadow:0 0 18px rgba(255,179,0,.45)}
+
+/* ── 비교 표 ── */
+.cmp{width:100%;border-collapse:collapse;font-size:16.5px}
+.cmp th{text-align:left;font-size:12px;letter-spacing:.12em;color:var(--dim);
+        font-weight:800;padding:0 0 14px}
+.cmp td{padding:15px 0;border-top:1px solid var(--line);vertical-align:top;line-height:1.5}
+.cmp td:first-child{color:#8b929d;width:44%;padding-right:26px}
+.cmp td:last-child{color:#e8eaed;padding-left:26px}
+.cmp td:last-child b{color:var(--am2)}
+
+/* ── 감사합니다 ── */
+.end{justify-content:center;align-items:center;text-align:center}
+.end .bee{width:118px;margin-bottom:34px;filter:drop-shadow(0 0 46px rgba(255,179,0,.3))}
+.end h1{font-size:56px;font-weight:800;letter-spacing:-.03em}
+.end .eq{font-size:19px;color:var(--mu);margin-top:22px;line-height:1.7}
+.end .em{position:absolute;bottom:60px;font-size:14px;color:var(--dim);letter-spacing:.03em}
+
+/* ── 네비게이션 ── */
+#nav{position:fixed;left:0;right:0;bottom:16px;display:flex;justify-content:center;
+     gap:7px;z-index:10;opacity:.32;transition:opacity .2s}
+#nav:hover{opacity:1}
+#nav i{width:20px;height:3px;border-radius:2px;background:#3a4150;cursor:pointer;
+       transition:background .18s,width .18s}
+#nav i.on{background:var(--am);width:34px}
+#hint{position:fixed;right:18px;bottom:14px;font-size:11px;color:#2f3542;letter-spacing:.04em}
+
+@media print{
+  html,body{overflow:visible;background:#fff}
+  #stage{position:static;display:block}
+  #deck{width:auto;height:auto;transform:none!important}
+  .sl{display:flex!important;position:relative;inset:auto;
+      width:297mm;height:167mm;page-break-after:always}
+  #nav,#hint{display:none}
+  @page{size:297mm 167mm;margin:0}
+}
+</style>
+</head>
+<body>
+<div id="stage"><div id="deck">
+
+<!-- 01 표지 -->
+<section class="sl on cover">
+  <img class="bee" src="../konabi.png" alt="커너비">
+  <div class="ceye">AI DX센터 체험콘텐츠 개선</div>
+  <h1>AI DX <span>CREW</span></h1>
+  <div class="cs">AI DX센터 커너비 구출작전<br>견학형 방문객을 위한 조별 참여 운영 시스템</div>
+  <div class="cq">"구경하러 온 29명을, 참여자로."</div>
+  <div class="disc">※ 원본 발표자료(PPT · PDF) 유실로 목업과 팀의 기록을 토대로 재구성한 복원본이며, <b style="color:#6b7280;font-weight:700">실제 발표 내용과 다를 수 있습니다.</b></div>
+  <div class="cline"></div>
+  <div class="cmeta">Team 23 · 강대경 &nbsp;이0혜 &nbsp;조0영<br>AI DX 센터 OPEN DAY · 2026.08.28</div>
+  <div class="award">아이디어톤<br><b>🏆 대상</b></div>
+</section>
+
+<!-- 02 문제 ① -->
+<section class="sl">
+  <div class="eye">PROBLEM 01</div>
+  <h2>준비된 체험은 10개인데,<br>사람은 <em>한 곳에만</em> 모입니다</h2>
+  <div class="sub">이 문제는 자료에서 찾은 것이 아닙니다. AI CREW로 근무하며 매번 봤습니다.</div>
+  <div class="body">
+    <div class="cols">
+      <div class="col card">
+        <div class="k">현장에서 벌어지는 일</div>
+        <div class="v">방문객은 이름을 아는 체험부터 고릅니다.<br>
+          Apple Vision Pro 앞에는 줄이 길어지고,<br>
+          <b>그동안 다른 부스는 비어 있습니다.</b></div>
+      </div>
+      <div class="col card">
+        <div class="k">결과</div>
+        <div class="v">센터가 준비한 다양한 기술을<br>
+          방문객 대부분이 <b>경험하지 못한 채</b> 돌아갑니다.<br>
+          <span class="am">체험존의 수가 아니라 동선이 문제였습니다.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="pn">02</div>
+</section>
+
+<!-- 03 문제 ② -->
+<section class="sl">
+  <div class="eye">PROBLEM 02</div>
+  <h2>5명이 들어가도,<br>기기를 잡는 사람은 <em>한 명</em>입니다</h2>
+  <div class="sub">단체 견학은 조 단위로 움직이지만, 참여는 조 단위로 일어나지 않습니다.</div>
+  <div class="body">
+    <div class="cols">
+      <div class="col card">
+        <div class="k">한 조 5명 중 실제 조작</div>
+        <div class="dots"><i class="dot on"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+        <div class="v" style="margin-top:20px">적극적인 한 명이 기기를 독점하고,<br>나머지는 뒤에서 구경하다 이동합니다.</div>
+      </div>
+      <div class="col card hi">
+        <div class="k">그런데 기록에는</div>
+        <div class="big sm" style="margin-top:14px"><span class="gr">5명</span> 체험 완료</div>
+        <div class="v" style="margin-top:16px">체험 <b>횟수</b>만 집계하는 방식으로는<br>
+          <span class="rd">실제 참여는 1명분</span>이라는 사실이<br>드러나지 않습니다.</div>
+      </div>
+    </div>
+  </div>
+  <div class="pn">03</div>
+</section>
+
+<!-- 04 발전 과정 -->
+<section class="sl">
+  <div class="eye">PROCESS</div>
+  <h2>아이디어는 <em>한 번 꺾이고</em> 나서 만들어졌습니다</h2>
+  <div class="body">
+    <div class="flow">
+      <div class="fr"><div class="fbox"><span class="who">조0영</span>
+        <span class="what">듀오링고식 스탬프 · 점수 누적 시스템</span></div></div>
+      <div class="arrow">▼</div>
+      <div class="fr"><div class="fbox no"><span class="who">문제</span>
+        <span class="what">우리 방문객은 <b>1회성</b>입니다. 돌아오지 않는 사람에게 누적 보상은 작동하지 않습니다</span></div></div>
+      <div class="arrow">▼</div>
+      <div class="fr"><div class="fbox"><span class="who">이0혜</span>
+        <span class="what">방탈출을 접목하자 — 하루 안에 완결되는 게임으로</span></div></div>
+      <div class="arrow">▼</div>
+      <div class="fr"><div class="fbox go"><span class="who">강대경</span>
+        <span class="what">커너비 <b style="color:#FFC93C">구출</b> 스토리텔링 + 조 편성 · 로테이션 · 역할 분리 운영 시스템</span></div></div>
+    </div>
+  </div>
+  <div class="notes" style="border-top:1px solid var(--line)">
+    <div class="nt"><div class="nk">핵심 전환</div>
+      <div class="nv">"체험하면 <b>보상을 준다</b>"에서 &nbsp;→&nbsp; "체험해야 <b>커너비를 구할 수 있다</b>"로.
+        보상을 늘리는 대신 <span class="am">게임의 승리 조건 자체를 다양한 체험으로 정의</span>했습니다.</div></div>
+  </div>
+  <div class="pn">04</div>
+</section>
+
+<!-- 05 컨셉 -->
+<section class="sl">
+  <div class="eye">CONCEPT</div>
+  <h2>커너비가 <em>위험에 빠졌습니다</em></h2>
+  <div class="sub">방탈출에서 가져온 것은 정서가 아니라 구조입니다. 가두는 이야기 대신 <b>구하는 이야기</b>로 뒤집었습니다.</div>
+  <div class="body">
+    <div class="cols" style="align-items:center">
+      <div class="col" style="flex:0 0 220px;text-align:center">
+        <img src="../konabi.png" style="width:176px;filter:drop-shadow(0 0 44px rgba(255,179,0,.3))" alt="커너비">
+      </div>
+      <div class="col">
+        <div class="card hi">
+          <div class="v" style="font-size:19px;margin-top:0">
+            커너비가 위험에 빠졌어! 구하려면 <b class="am">꿀</b>이 필요해.<br>체험을 해내면 꿀이 모여. 도와줄래?</div>
+        </div>
+        <div class="cols" style="margin-top:20px">
+          <div class="col card"><div class="k">리워드</div>
+            <div class="big sm am" style="margin-top:12px">🍯 HONEY</div>
+            <div class="lbl">커너비를 구하는 재료</div></div>
+          <div class="col card"><div class="k">반 전체 목표</div>
+            <div class="big sm" style="margin-top:12px">3,000</div>
+            <div class="lbl">모으면 커너비를 구합니다</div></div>
+        </div>
+        <div class="cols" style="margin-top:16px;font-size:14.5px;color:#8b929d;gap:20px">
+          <div class="col">가두면 커너비는 <b style="color:#ef6a6a">적</b>이 되고 체험은 벌칙이 됩니다</div>
+          <div class="col">구하면 커너비는 <b style="color:#FFC93C">함께 지킬 대상</b>이 되고 체험은 돕는 행동이 됩니다</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pn">05</div>
+</section>
+
+<!-- 06 완전 로테이션 -->
+<section class="sl">
+  <div class="eye">SOLUTION 01 · 쏠림</div>
+  <h2>줄 서지 말라고 안내하는 대신,<br><em>줄이 생기지 않는 배치표</em>를 만듭니다</h2>
+  <div class="shot"><img src="../screens/01-operator-console.png" alt="운영 콘솔 — 조 편성과 라운드 타임테이블"></div>
+  <div class="notes">
+    <div class="nt"><div class="nk">자동 산출</div>
+      <div class="nv">30명 · 30분 · 7부스를 넣으면 <b>6조 × 5명, 6라운드 × 4분</b>이 산식으로 도출됩니다</div></div>
+    <div class="nt"><div class="nk">순환 라틴방격</div>
+      <div class="nv">같은 라운드에 두 조가 같은 부스에 없습니다. <b>대기열이 원천적으로 생기지 않습니다</b></div></div>
+    <div class="nt"><div class="nk">버퍼 1부스</div>
+      <div class="nv">조 수를 부스보다 하나 적게. 매 라운드 비는 부스가 순환하며 <b>지연을 흡수</b>합니다</div></div>
+  </div>
+  <div class="pn">06</div>
+</section>
+
+<!-- 07 역할 분리 -->
+<section class="sl">
+  <div class="eye">SOLUTION 02 · 참여 편중</div>
+  <h2>기기가 1대여도 <em>5명이 모두</em> 참여하게 만듭니다</h2>
+  <div class="sub">한 사람이 혼자서는 절대 끝낼 수 없도록 미션을 역할로 쪼갰습니다.</div>
+  <div class="body">
+    <div class="role">
+      <div class="rc op">
+        <div class="rt">조작자</div>
+        <div class="rrow"><div class="rk">가진 것</div><div class="rv">기기와 실제 조작 권한</div></div>
+        <div class="rrow"><div class="rk">없는 것</div><div class="rv"><b class="rd">미션 절차를 모릅니다</b></div></div>
+      </div>
+      <div class="vs">+</div>
+      <div class="rc di">
+        <div class="rt">지시자</div>
+        <div class="rrow"><div class="rk">가진 것</div><div class="rv">미션 절차 (앱 화면)</div></div>
+        <div class="rrow"><div class="rk">없는 것</div><div class="rv"><b class="rd">조작자의 시야를 못 봅니다</b></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="notes">
+    <div class="nt"><div class="nk">예시 미션 · 블랙박스 정비</div>
+      <div class="nv">착용자에게는 순서가 보이지 않습니다. <b>말로만 지시해</b> 엔진을 분해하세요</div></div>
+    <div class="nt"><div class="nk">조작자 교대</div>
+      <div class="nv">라운드마다 순환 — <b>6라운드 ÷ 5명 = 전원 최소 1회</b> 직접 조작이 보장됩니다</div></div>
+    <div class="nt"><div class="nk">소외 방지</div>
+      <div class="nv">아직 조작하지 않은 조원이 <b>앱 화면에 드러납니다</b>. 교대가 자연스럽게 일어납니다</div></div>
+  </div>
+  <div class="pn">07</div>
+</section>
+
+<!-- 08 학생 앱 -->
+<section class="sl">
+  <div class="eye">SCREEN · 학생</div>
+  <h2>브리핑 → 미션 → <em>구출</em></h2>
+  <div class="shot"><img src="../screens/02-student-app.png" alt="학생 앱 — 사용자 경험 3단계"></div>
+  <div class="notes">
+    <div class="nt"><div class="nk">접속</div>
+      <div class="nv">개인 휴대폰으로 QR 접속. <b>조당 1대로도 작동</b>합니다</div></div>
+    <div class="nt"><div class="nk">미션 화면</div>
+      <div class="nv">내 역할과 조원별 조작 상태가 함께 보입니다. <b>1인용 기기를 5인용으로</b></div></div>
+    <div class="nt"><div class="nk">만족도 조사</div>
+      <div class="nv">응답하면 <b>설문 꿀</b> 지급 — 안 해도 커너비는 구합니다. 게이팅이 아니라 보너스</div></div>
+  </div>
+  <div class="pn">08</div>
+</section>
+
+<!-- 09 메인 스테이지 -->
+<section class="sl">
+  <div class="eye">SCREEN · 메인 스테이지</div>
+  <h2>6개 조의 꿀이 <em>하나의 게이지</em>로 합쳐집니다</h2>
+  <div class="shot"><img src="../screens/03-main-stage.png" alt="메인 스테이지 — 꿀 게이지와 반 기록"></div>
+  <div class="notes">
+    <div class="nt"><div class="nk">경쟁 + 협력</div>
+      <div class="nv">조별 순위 위에 <b>반 전체 목표</b>를 얹어, 남의 조가 잘해도 손해가 아닙니다</div></div>
+    <div class="nt"><div class="nk">실패 없음</div>
+      <div class="nv">게이지는 달성 여부가 아니라 <b>총량</b>을 표시합니다. 커너비는 반드시 구해냅니다</div></div>
+    <div class="nt"><div class="nk">다음 팀에게</div>
+      <div class="nv">모은 양이 <b>반 기록</b>으로 남아, 1회성 방문객도 남기고 갈 것이 생깁니다</div></div>
+  </div>
+  <div class="pn">09</div>
+</section>
+
+<!-- 10 운영 대시보드 -->
+<section class="sl">
+  <div class="eye">SCREEN · 운영자</div>
+  <h2>게임 데이터가 그대로 <em>센터 운영 데이터</em>가 됩니다</h2>
+  <div class="shot"><img src="../screens/04-ops-dashboard.png" alt="운영 인사이트 대시보드"></div>
+  <div class="notes">
+    <div class="nt"><div class="nk">병목 진단</div>
+      <div class="nv">Vision Pro가 <b>6라운드 중 5라운드에서 시간 초과</b> → 미션 단계 축소 제안</div></div>
+    <div class="nt"><div class="nk">콘텐츠 개선</div>
+      <div class="nv">XREAL은 시간이 남는데 만족도 3.6 → <b>미션 재설계 대상</b>으로 자동 식별</div></div>
+    <div class="nt"><div class="nk">선순환</div>
+      <div class="nv">체험 → 참여 데이터 → 콘텐츠 개선 → <b>다음 시즌 미션에 반영</b></div></div>
+  </div>
+  <div class="pn">10</div>
+</section>
+
+<!-- 11 정리 -->
+<section class="sl">
+  <div class="eye">SUMMARY</div>
+  <h2>안내로 부탁하지 않고,<br><em>구조로 해결</em>했습니다</h2>
+  <div class="body">
+    <table class="cmp">
+      <tr><th>기존 견학</th><th>AI DX CREW</th></tr>
+      <tr><td>인기 부스에 쏠린다</td><td>완전 로테이션으로 <b>전 부스 1회씩 보장</b></td></tr>
+      <tr><td>조에서 한 명만 조작한다</td><td>역할 분리로 <b>전원 최소 1회 직접 조작</b></td></tr>
+      <tr><td>1회성 방문이라 동기가 없다</td><td><b>반 기록</b>으로 다음 팀에게 남는다</td></tr>
+      <tr><td>만족도 조사 회수율이 낮다</td><td><b>설문 꿀</b> 보너스로 자발적 응답 유도</td></tr>
+      <tr><td>운영 판단이 감에 의존한다</td><td><b>소요시간 · 병목 · 만족도</b> 데이터로 개선</td></tr>
+    </table>
+  </div>
+  <div class="pn">11</div>
+</section>
+
+<!-- 12 감사합니다 -->
+<section class="sl end">
+  <img class="bee" src="../konabi.png" alt="커너비">
+  <h1>감사합니다</h1>
+  <div class="eq">모든 방문객이 다양한 체험에 <span class="am">실제로 참여하게</span> 만드는 것<br>그것 하나만 보고 설계했습니다.</div>
+  <div class="em">Team 23 · 강대경 &nbsp;이0혜 &nbsp;조0영 &nbsp;|&nbsp; AI DX 센터 OPEN DAY 2026<br>
+    <span style="color:#3d4450;font-size:12.5px">원본 발표자료 유실로 재구성한 복원본 · 실제 발표 내용과 다를 수 있습니다</span></div>
+</section>
+
+</div></div>
+
+<div id="nav"></div>
+<div id="hint">← → · Space · F</div>
+
+<script>
+const slides=[...document.querySelectorAll('.sl')];
+const nav=document.getElementById('nav');
+const deck=document.getElementById('deck');
+let i=0;
+
+slides.forEach((_,n)=>{
+  const b=document.createElement('i');
+  b.onclick=()=>go(n);
+  nav.appendChild(b);
+});
+const dots=[...nav.children];
+
+function go(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+  dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+  location.hash=i+1;
+}
+function fit(){
+  const s=Math.min(innerWidth/1280,innerHeight/720)*0.94;
+  deck.style.transform='scale('+s+')';
+}
+addEventListener('resize',fit);
+addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1)}
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}
+  else if(e.key==='Home')go(0);
+  else if(e.key==='End')go(slides.length-1);
+  else if(e.key==='f'||e.key==='F'){
+    document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+  }
+});
+addEventListener('click',e=>{if(!e.target.closest('#nav'))go(i+1)});
+
+fit();
+go(Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
+</script>
+</body>
+</html>

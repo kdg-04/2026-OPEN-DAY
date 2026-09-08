@@ -1,0 +1,97 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><style>
+@page{size:A4 landscape;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:#16181d;-webkit-font-smoothing:antialiased}
+.pg{width:297mm;height:210mm;padding:14mm 16mm 12mm;display:flex;flex-direction:column;
+    page-break-after:always;position:relative;background:#fff}
+.pg:last-child{page-break-after:auto}
+.eyebrow{font-size:8.5pt;letter-spacing:.16em;color:#C08A00;font-weight:800}
+.h{font-size:17pt;font-weight:800;letter-spacing:-.02em;margin-top:3mm}
+.s{font-size:9.5pt;color:#6d7480;margin-top:1.6mm;line-height:1.5}
+.imgbox{flex:1;display:flex;align-items:center;justify-content:center;margin:6mm 0 5mm;min-height:0}
+img{max-width:100%;max-height:100%;object-fit:contain;border-radius:2.4mm;
+    box-shadow:0 1mm 4mm rgba(0,0,0,.16)}
+.notes{display:flex;gap:7mm;border-top:.4mm solid #e3e6ea;padding-top:4mm}
+.n{flex:1}
+.nl{font-size:7.6pt;letter-spacing:.1em;color:#9aa1ac;font-weight:700}
+.nv{font-size:9pt;line-height:1.55;margin-top:1.6mm;color:#3d434d}
+.nv b{color:#16181d;font-weight:700}
+.pn{position:absolute;right:16mm;bottom:7mm;font-size:8pt;color:#b3b9c2}
+
+/* 표지 */
+.cover{background:#0d0f14;color:#e8eaed;justify-content:center;padding:0 26mm}
+.cbee{width:50mm;margin-bottom:8mm;box-shadow:none;border-radius:0}
+.ceye{font-size:9pt;letter-spacing:.2em;color:#FFB300;font-weight:800}
+.ct{font-size:34pt;font-weight:800;letter-spacing:-.03em;margin-top:5mm;line-height:1.1}
+.ct span{color:#FFB300}
+.cs{font-size:12pt;color:#98a0ad;margin-top:5mm;line-height:1.6}
+.cq{font-size:14pt;font-weight:700;color:#FFC93C;margin-top:11mm;letter-spacing:-.01em}
+.cmeta{position:absolute;left:26mm;bottom:14mm;font-size:8.6pt;color:#6b7280;letter-spacing:.04em}
+.cdisc{font-size:8.4pt;color:#4d5461;margin-top:7mm;line-height:1.6}
+.cline{position:absolute;left:26mm;right:26mm;bottom:26mm;height:.4mm;background:#242a35}
+</style></head><body>
+
+<div class="pg cover">
+ <img class="cbee" src="../konabi.png">
+ <div class="ceye">AI DX센터 체험콘텐츠 개선</div>
+ <div class="ct">AI DX <span>CREW</span></div>
+ <div class="cs">AI DX센터 커너비 구출작전<br>견학형 방문객을 위한 조별 참여 운영 시스템 · 프로토타입 화면 4종</div>
+ <div class="cdisc">※ 원본 발표자료 유실로 재구성한 복원본 · 실제 발표 내용과 다를 수 있습니다</div>
+ <div class="cq">"구경하러 온 29명을, 참여자로."</div>
+ <div class="cline"></div>
+ <div class="cmeta">시나리오 · 커너비 구출작전 &nbsp;|&nbsp; 2026-08-28</div>
+</div>
+
+<div class="pg">
+ <div class="eyebrow">SCREEN 01 · 운영자</div>
+ <div class="h">조 편성 &amp; 라운드 타임테이블</div>
+ <div class="s">인원 · 체류시간 · 부스 수를 입력하면 조 편성표와 타임테이블이 자동 생성된다</div>
+ <div class="imgbox"><img src="../screens/01-operator-console.png"></div>
+ <div class="notes">
+  <div class="n"><div class="nl">핵심</div><div class="nv">30명 / 30분 / 7부스 → <b>6조 × 5명, 6라운드 × 4분</b>이 산식으로 도출된다</div></div>
+  <div class="n"><div class="nl">배치 규칙</div><div class="nv">순환 라틴방격. Apple Vision Pro는 대각선으로 <b>전 조가 정확히 1회씩</b> 배정</div></div>
+  <div class="n"><div class="nl">버퍼</div><div class="nv">매 라운드 부스 1개가 휴식하며 6개 부스에 <b>균등하게 순환</b> — 지연을 흡수한다</div></div>
+ </div>
+ <div class="pn">01</div>
+</div>
+
+<div class="pg">
+ <div class="eyebrow">SCREEN 02 · 학생</div>
+ <div class="h">사용자 경험 3단계</div>
+ <div class="s">개인 휴대폰으로 접속 · 조당 1대로도 작동한다</div>
+ <div class="imgbox"><img src="../screens/02-student-app.png"></div>
+ <div class="notes">
+  <div class="n"><div class="nl">역할 분리</div><div class="nv">조작자는 미션 내용을 모르고, 지시자는 화면이 안 보인다. <b>1인용 기기를 5인용으로</b></div></div>
+  <div class="n"><div class="nl">조작자 교대</div><div class="nv">하단 조원 상태 표시. <b>6라운드 ÷ 5명 = 전원 최소 1회</b> 직접 조작</div></div>
+  <div class="n"><div class="nl">조별 랭킹 &amp; 설문</div><div class="nv">결과 화면에 조별 순위가 뜨고, 만족도 응답 시 <b>설문 꿀</b>이 지급된다 — 게이팅이 아닌 보너스</div></div>
+ </div>
+ <div class="pn">02</div>
+</div>
+
+<div class="pg">
+ <div class="eyebrow">SCREEN 03 · 메인 스테이지</div>
+ <div class="h">꿀 게이지 &amp; 반 기록</div>
+ <div class="s">센터 입구 대형화면 · 6개 조의 꿀이 하나의 게이지로 합쳐진다</div>
+ <div class="imgbox"><img src="../screens/03-main-stage.png"></div>
+ <div class="notes">
+  <div class="n"><div class="nl">경쟁 + 협력</div><div class="nv">조별 순위 위에 <b>반 전체 목표</b>를 얹어 남의 조가 잘해도 손해가 아니다</div></div>
+  <div class="n"><div class="nl">실패 없음</div><div class="nv">게이지는 달성 여부가 아니라 <b>총량</b>을 표시한다. 커너비는 반드시 구해낸다</div></div>
+  <div class="n"><div class="nl">다음 팀에게</div><div class="nv">모은 양이 반 기록으로 남아 <b>다음 견학 팀의 도전 대상</b>이 된다</div></div>
+ </div>
+ <div class="pn">03</div>
+</div>
+
+<div class="pg">
+ <div class="eyebrow">SCREEN 04 · 운영자</div>
+ <div class="h">운영 인사이트 대시보드</div>
+ <div class="s">센터가 지금 가장 모르면서, 운영에 직결되는 데이터</div>
+ <div class="imgbox"><img src="../screens/04-ops-dashboard.png"></div>
+ <div class="notes">
+  <div class="n"><div class="nl">병목 진단</div><div class="nv">Vision Pro가 <b>6라운드 중 5라운드에서 배정 시간 초과</b> → 미션 단계 축소 제안</div></div>
+  <div class="n"><div class="nl">콘텐츠 개선</div><div class="nv">XREAL은 시간이 남는데 만족도 3.6 → <b>미션 재설계 대상</b>으로 자동 식별</div></div>
+  <div class="n"><div class="nl">선순환</div><div class="nv">체험 → 참여 데이터 → 콘텐츠 개선. <b>다음 시즌 미션에 반영</b>된다</div></div>
+ </div>
+ <div class="pn">04</div>
+</div>
+
+</body></html>

@@ -1,0 +1,6 @@
+.DS_Store
+*.log
+Thumbs.db
+
+# 학번이 포함된 상장 원본 — 로컬 보관용, 공개 금지
+OpenDay 대상.pdf

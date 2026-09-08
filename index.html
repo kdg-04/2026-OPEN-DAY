@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI DX센터 커너비 구출작전</title>
+<meta name="description" content="AI DX 센터 견학을 협동 구출 미션으로 재설계한 체험 운영 시스템 — 2026 OPEN DAY 아이디어톤 대상 수상작">
+<style>
+:root{--bg:#0d0f14;--pn:#161a22;--ln:#242a35;--tx:#e8eaed;--mu:#98a0ad;--dim:#6b7280;
+      --am:#FFB300;--am2:#FFC93C;--red:#ef6a6a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);line-height:1.7;
+     font-family:"Apple SD Gothic Neo","Pretendard","Noto Sans KR",system-ui,sans-serif;
+     -webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+.am{color:var(--am)}
+
+/* 히어로 */
+header{padding:96px 0 72px;text-align:center;position:relative;overflow:hidden}
+header::after{content:"";position:absolute;left:50%;top:-180px;width:760px;height:420px;
+  transform:translateX(-50%);background:radial-gradient(ellipse,rgba(255,179,0,.10),transparent 68%);
+  pointer-events:none}
+.bee{width:132px;filter:drop-shadow(0 0 46px rgba(255,179,0,.32));position:relative;z-index:1}
+.badge{display:inline-block;margin:26px 0 0;padding:6px 15px;border-radius:999px;
+  background:rgba(255,179,0,.11);border:1px solid rgba(255,179,0,.32);
+  color:var(--am2);font-size:13px;font-weight:800;letter-spacing:.04em}
+h1{font-size:clamp(34px,6vw,54px);font-weight:800;letter-spacing:-.035em;margin:20px 0 0;line-height:1.15}
+.tag{font-size:clamp(16px,2.4vw,20px);font-weight:700;color:var(--am2);margin-top:20px;letter-spacing:-.01em}
+.lede{color:var(--mu);margin-top:16px;font-size:16px;line-height:1.75}
+
+/* CTA */
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:40px}
+.btn{display:flex;align-items:center;gap:10px;padding:14px 24px;border-radius:12px;
+  background:var(--pn);border:1px solid var(--ln);font-size:15px;font-weight:700;
+  transition:border-color .18s,transform .18s,background .18s}
+.btn:hover{border-color:#3d4757;transform:translateY(-2px);background:#1b2029}
+.btn.pri{background:linear-gradient(135deg,#FFB300,#FFA000);color:#1a1206;border-color:transparent}
+.btn.pri:hover{background:linear-gradient(135deg,#FFC02E,#FFAF1A)}
+.btn i{font-style:normal;font-size:17px}
+
+/* 섹션 */
+section{padding:60px 0;border-top:1px solid var(--ln)}
+h2{font-size:13px;letter-spacing:.16em;color:var(--dim);font-weight:800;margin-bottom:26px}
+
+/* 문제 → 해결 */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.box{background:var(--pn);border:1px solid var(--ln);border-radius:14px;padding:26px 28px}
+.box.sol{background:linear-gradient(160deg,#231c07,#181b22);border-color:#4a3a10}
+.box .h{font-size:12px;letter-spacing:.1em;font-weight:800;color:var(--dim)}
+.box.sol .h{color:var(--am)}
+.box .t{font-size:19px;font-weight:800;margin-top:12px;letter-spacing:-.02em;line-height:1.4}
+.box .d{color:#b9c0ca;margin-top:12px;font-size:15px}
+.box .d b{color:#fff}
+
+/* 목업 그리드 */
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.shot{background:var(--pn);border:1px solid var(--ln);border-radius:14px;overflow:hidden;
+      transition:border-color .18s,transform .18s;display:block}
+.shot:hover{border-color:#3d4757;transform:translateY(-2px)}
+.shot img{width:100%;display:block;background:#0a0c10}
+.shot .cap{padding:15px 18px}
+.shot .cap .k{font-size:11px;letter-spacing:.11em;color:var(--dim);font-weight:800}
+.shot .cap .v{font-size:15px;font-weight:700;margin-top:5px}
+
+/* 문서 목록 */
+.docs{display:grid;gap:11px}
+.doc{display:flex;align-items:center;gap:15px;padding:17px 21px;background:var(--pn);
+  border:1px solid var(--ln);border-radius:12px;transition:border-color .18s,transform .18s}
+.doc:hover{border-color:#3d4757;transform:translateX(3px)}
+.doc .n{font-size:12px;color:var(--dim);font-weight:800;min-width:26px}
+.doc .t{font-weight:700;font-size:15px}
+.doc .s{color:var(--mu);font-size:13.5px;margin-left:auto;text-align:right}
+
+/* 고지 */
+.note{background:#15171d;border:1px solid var(--ln);border-left:3px solid var(--am);
+  border-radius:0 12px 12px 0;padding:22px 26px;color:#aab1bb;font-size:14px;line-height:1.75}
+.note b{color:#e8eaed}
+footer{padding:44px 0 68px;color:var(--dim);font-size:13.5px;line-height:1.9;
+       border-top:1px solid var(--ln)}
+
+@media(max-width:720px){
+  .pair,.shots{grid-template-columns:1fr}
+  header{padding:64px 0 48px}
+  .doc{flex-wrap:wrap}.doc .s{margin-left:0;width:100%;text-align:left}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <img class="bee" src="konabi.png" alt="커너비">
+    <div class="badge">🏆 2026 AI DX 센터 OPEN DAY 아이디어톤 대상</div>
+    <h1>AI DX센터 <span class="am">커너비 구출작전</span></h1>
+    <div class="tag">"구경하러 온 29명을, 참여자로."</div>
+    <p class="lede">연암공과대학교 AI DX 센터의 견학 프로그램을<br>
+      <b>협동 구출 미션</b>으로 재설계한 체험 운영 시스템 기획</p>
+    <div class="cta">
+      <a class="btn pri" href="presentation/slides.html"><i>▶</i> 발표 슬라이드 보기</a>
+      <a class="btn" href="docs/AI-DX센터-커너비-구출작전-MVP.pdf"><i>📄</i> MVP 정의서 (PDF)</a>
+      <a class="btn" href="presentation/book.html"><i>📖</i> 화면 북클릿</a>
+    </div>
+  </div>
+</header>
+
+<section><div class="wrap">
+  <h2>THE PROBLEM → THE ANSWER</h2>
+  <div class="pair">
+    <div class="box">
+      <div class="h">문제 01</div>
+      <div class="t">준비된 체험은 10개인데<br>사람은 한 곳에만 모인다</div>
+      <div class="d">인기 부스에는 줄이 서고, 그동안 다른 부스는 비어 있다.
+        방문객 대부분이 센터의 기술을 <b>경험하지 못한 채</b> 돌아간다.</div>
+    </div>
+    <div class="box sol">
+      <div class="h">해결 01</div>
+      <div class="t">줄이 생기지 않는<br>배치표를 만든다</div>
+      <div class="d"><b>순환 라틴방격</b> 배치로 같은 라운드에 두 조가 같은 부스에 가지 않는다.
+        대기열이 <b>원천적으로 발생하지 않는다.</b></div>
+    </div>
+    <div class="box">
+      <div class="h">문제 02</div>
+      <div class="t">5명이 들어가도<br>기기를 잡는 건 한 명</div>
+      <div class="d">나머지는 뒤에서 구경하다 이동한다.
+        기록은 5명분이지만 <b>실제 참여는 1명분</b>이다.</div>
+    </div>
+    <div class="box sol">
+      <div class="h">해결 02</div>
+      <div class="t">혼자서는 끝낼 수 없는<br>미션으로 쪼갠다</div>
+      <div class="d"><b>조작자</b>는 절차를 모르고, <b>지시자</b>는 화면을 못 본다.
+        말로 협업해야만 미션이 끝난다.</div>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>PROTOTYPE · 프로토타입 화면 4종</h2>
+  <div class="shots">
+    <a class="shot" href="screens/01-operator-console.png">
+      <img src="screens/01-operator-console.png" alt="운영 콘솔">
+      <div class="cap"><div class="k">SCREEN 01 · 운영자</div><div class="v">조 편성 &amp; 라운드 타임테이블</div></div></a>
+    <a class="shot" href="screens/02-student-app.png">
+      <img src="screens/02-student-app.png" alt="학생 앱">
+      <div class="cap"><div class="k">SCREEN 02 · 학생</div><div class="v">브리핑 → 미션 → 구출</div></div></a>
+    <a class="shot" href="screens/03-main-stage.png">
+      <img src="screens/03-main-stage.png" alt="메인 스테이지">
+      <div class="cap"><div class="k">SCREEN 03 · 메인 스테이지</div><div class="v">꿀 게이지 &amp; 반 기록</div></div></a>
+    <a class="shot" href="screens/04-ops-dashboard.png">
+      <img src="screens/04-ops-dashboard.png" alt="운영 대시보드">
+      <div class="cap"><div class="k">SCREEN 04 · 운영자</div><div class="v">운영 인사이트 대시보드</div></div></a>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>DOCUMENTS · 기획 문서</h2>
+  <div class="docs">
+    <a class="doc" href="docs/01-background.md"><span class="n">01</span>
+      <span class="t">배경과 아이디어 발전 과정</span>
+      <span class="s">현장에서 본 문제 · 스탬프에서 구출 미션까지</span></a>
+    <a class="doc" href="docs/02-system-design.md"><span class="n">02</span>
+      <span class="t">시스템 설계</span>
+      <span class="s">조 편성 산식 · 역할 분리 · 꿀 산정</span></a>
+    <a class="doc" href="docs/03-roadmap.md"><span class="n">03</span>
+      <span class="t">실서비스 확장 로드맵</span>
+      <span class="s">Phase 1~4</span></a>
+    <a class="doc" href="docs/AI-DX센터-커너비-구출작전-MVP.pdf"><span class="n">04</span>
+      <span class="t">MVP 정의서 <span class="am">· PDF</span></span>
+      <span class="s">실제로 만들 최소 제품의 범위와 설계</span></a>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>NOTICE · 자료에 대한 고지</h2>
+  <div class="note">
+    발표에 사용한 <b>PPT · PDF 원본은 유실</b>되었습니다.
+    원본 그대로 남아 있는 자료는 위의 <b>프로토타입 화면 4종</b>뿐입니다.<br><br>
+    발표 슬라이드는 목업과 팀의 기록을 토대로 <b>재구성한 복원본</b>이며 실제 발표 내용과 다를 수 있고,
+    기획 문서는 목업을 분석해 <b>이후에 새로 작성</b>한 것입니다.
+    확정할 수 없는 내용은 지어내지 않고 <b>[확인 필요]</b>로 표시했습니다.<br><br>
+    목업 속 학교명 · 학생 이름 · 수치는 모두 예시 데이터이며, 학생 이름과 팀원 이름은 <b>익명 처리</b>했습니다.
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <b style="color:#98a0ad">Team 23</b> · 강대경 (팀장) · 이0혜 · 조0영<br>
+  연암공과대학교 AI DX 센터 OPEN DAY · 2026.08.28<br>
+  커너비는 연암공과대학교의 마스코트이며, 캐릭터에 대한 권리는 연암공과대학교에 있습니다.
+</div></footer>
+
+</body>
+</html>
