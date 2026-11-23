@@ -33,7 +33,9 @@
 | **산출물** | 기획 + 프로토타입 화면 4종 (실서비스 개발 전 단계) |
 
 <p align="center">
-  <img src="award-certificate.png" width="320" alt="대상 상장">
+  <img src="award-certificate.png" width="280" alt="대상 상장">
+  &nbsp;
+  <img src="completion-certificate.png" width="280" alt="OPEN DAY 수료증">
 </p>
 
 ### 바로 보기
